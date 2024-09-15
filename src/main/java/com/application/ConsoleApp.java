@@ -46,7 +46,7 @@ public class ConsoleApp implements Runnable {
 
         System.out.print("Выход из игры");
         for (int i = 0; i < 3; i++) {
-            pause(1000);
+            pause(700);
             System.out.print(".");
         }
 
@@ -59,11 +59,14 @@ public class ConsoleApp implements Runnable {
         String word = Dictionary.fetchRandomNoun();
         int wordSize = word.length();
         int mistakeCounter = 0;
-        String choice;
+        int trueCount;
         int turn = 1;
+        String choice;
         boolean[] answers = new boolean[wordSize];
+        boolean isGame = true;
 
-        while (running) {
+
+        while (isGame) {
             System.out.println("ХОД - " + turn);
             Printer.printHangman(mistakeCounter);
             Printer.printWord(word, answers);
@@ -88,13 +91,21 @@ public class ConsoleApp implements Runnable {
                 // Проверка поражения и победы...
                 if (mistakeCounter >= 8) {
                     System.out.println("Вы проиграли...");
+                    System.out.println("Загаданное слово - " + word);
                     break;
                 }
+
                 for (boolean answer : answers) {
                     if (!answer) {
                         break;
-                    } else if (turn == wordSize) {
+                    }
+                    trueCount = 0;
+                    for (boolean b : answers) {
+                        if (b) trueCount++;
+                    }
+                    if (trueCount == wordSize) {
                         System.out.println("Вы победили!!!");
+                        isGame = false;
                         break;
                     }
                 }

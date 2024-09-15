@@ -93,7 +93,6 @@ public class Printer {
 
 
     public static void printWord(String word, boolean[] answers){
-
         if (!word.isEmpty()){
             char[] letters = word.toCharArray();
 
@@ -106,7 +105,7 @@ public class Printer {
                 }
 
             }
-            System.out.println(1);
+            System.out.println();
         }
 
 
