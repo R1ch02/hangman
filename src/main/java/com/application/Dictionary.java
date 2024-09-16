@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-//TODO парсинг
+//TODO Брать слово из файла
 public class Dictionary {
 
     private static final List<String> wordsList = new ArrayList<>(Arrays.asList("Указатель", "Радуга", "Мармелад", "Поиск", "Прятки", "Сторож", "Копейка", "Леопард", "Аттракцион",
@@ -23,29 +23,6 @@ public class Dictionary {
     ));
 
     public static String fetchRandomNoun(){
-
-//        String url = "https://slotobzor.com/nastolnye-igry-dlya-vzroslyh/slozhnye-slova-dlya-ugadyvaniya-na-igru-viselitsa-interesnye-primery/";
-//        List<String> words = new ArrayList<>();
-//        String randomWord = "";
-//
-//        try {
-//            // Получение HTML-документа
-//            Document doc = Jsoup.connect(url).get();
-//            Elements elements = doc.select("p, li");
-//            for (Element element : elements) {
-//                String text = element.text();
-//                // Разделяем текст на слова
-//                String[] splitWords = text.split("\\W+");
-//                for (String word : splitWords) {
-//                    if (!word.isEmpty() && word.length() > 3 ) {
-//                        words.add(word);
-//                    }
-//                }
-//            }
-//
-//            System.out.println(words);
-
-            // Выбор случайного слова
 
             String randomWord = "";
             if (!wordsList.isEmpty()) {

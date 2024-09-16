@@ -7,7 +7,9 @@ public class ConsoleApp implements Runnable {
 
     private volatile boolean running = true;
 
-    //TODO ошибка ввода. Из-за отдельного потока?
+    //TODO При открытии буквы пишется одна строчка.
+    //TODO Повторно вводимый символ не должен считаться за ошибку. Использовать Set<>.
+    //TODO Выводить список использованных букв
     @Override
     public void run() {
         Scanner scanner = new Scanner(System.in);
@@ -42,7 +44,6 @@ public class ConsoleApp implements Runnable {
             }
 
         }
-        //TODO реализовать выход. Закрытие потока.
 
         System.out.print("Выход из игры");
         for (int i = 0; i < 3; i++) {
