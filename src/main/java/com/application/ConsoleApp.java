@@ -1,8 +1,10 @@
 package com.application;
 
 import java.io.FileNotFoundException;
+import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.Set;
 
 public class ConsoleApp implements Runnable {
 
@@ -14,10 +16,6 @@ public class ConsoleApp implements Runnable {
         this.dictionary = dictionary;
     }
 
-
-    //TODO При открытии буквы пишется одна строчка.
-    //TODO Повторно вводимый символ не должен считаться за ошибку. Использовать Set<>.
-    //TODO Выводить список использованных букв
     @Override
     public void run() {
         Scanner scanner = new Scanner(System.in);
@@ -66,6 +64,7 @@ public class ConsoleApp implements Runnable {
 
     private void playGame(Scanner scanner) {
         String word = dictionary.fetchRandomNoun();
+        Set<String> letterSet = new HashSet<>();
         int wordSize = word.length();
         int mistakeCounter = 0;
         int trueCount;
@@ -80,20 +79,50 @@ public class ConsoleApp implements Runnable {
             Printer.printHangman(mistakeCounter);
             Printer.printWord(word, answers);
 
-            choice = scanner.nextLine().toUpperCase();
+            if (letterSet.isEmpty()) {
+                System.out.println("Вы не использовали ни одной буквы");
+            } else {
+                System.out.print("Использованные буквы - ");
+                for (String s : letterSet) {
+                    System.out.print(s + " ");
+                }
+                System.out.println();
+            }
 
-            if (choice.length() == 1) {
+            choice = scanner.nextLine().toUpperCase();
+            System.out.println();
+
+            if (choice.length() != 1)   {
+
+                System.out.println("Буква введена неверно, попробуйте снова.");
+
+            } else if (letterSet.contains(choice.toUpperCase())) {
+
+                System.out.println("Буква уже была введена. Попробуйте ввести другую.");
+
+            } else {
+
                 boolean correctGuess = false;  // Флаг для правильного ввода
+                boolean isOpen = false;
                 for (int i = 0; i < wordSize; i++) {
                     if (choice.charAt(0) == word.charAt(i)) {
                         answers[i] = true;
                         correctGuess = true;
-                        System.out.println("Вы открыли букву!");
+                        letterSet.add(choice);
+                        isOpen = true;
+
+
                     }
                 }
+
+                if (isOpen){
+                    System.out.println("Вы открыли букву!");
+                }
+
                 if (!correctGuess) {
                     System.out.println("Такой буквы нету");
                     mistakeCounter++;
+                    letterSet.add(choice);
                 }
                 turn++;
 
@@ -118,9 +147,6 @@ public class ConsoleApp implements Runnable {
                         break;
                     }
                 }
-
-            } else {
-                System.out.println("Буква введена неверно, попробуйте снова.");
             }
         }
     }
@@ -129,7 +155,7 @@ public class ConsoleApp implements Runnable {
         running = false;  // Метод для завершения работы потока
     }
 
-    public static void pause(int mils){
+    public static void pause(int mils) {
         try {
             Thread.sleep(mils);
         } catch (InterruptedException e) {
