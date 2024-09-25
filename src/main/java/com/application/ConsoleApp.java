@@ -1,5 +1,6 @@
 package com.application;
 
+import java.io.FileNotFoundException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -7,15 +8,22 @@ public class ConsoleApp implements Runnable {
 
     private volatile boolean running = true;
 
+    private final Dictionary dictionary;
+
+    public ConsoleApp(Dictionary dictionary) {
+        this.dictionary = dictionary;
+    }
+
+
     //TODO При открытии буквы пишется одна строчка.
     //TODO Повторно вводимый символ не должен считаться за ошибку. Использовать Set<>.
     //TODO Выводить список использованных букв
     @Override
     public void run() {
         Scanner scanner = new Scanner(System.in);
+
         outerLoop:
         while (running) {
-
             System.out.println("Выберите действие:");
             System.out.println("1. Начать новую игру");
             System.out.println("2. Выход из игры");
@@ -57,7 +65,7 @@ public class ConsoleApp implements Runnable {
     }
 
     private void playGame(Scanner scanner) {
-        String word = Dictionary.fetchRandomNoun();
+        String word = dictionary.fetchRandomNoun();
         int wordSize = word.length();
         int mistakeCounter = 0;
         int trueCount;

@@ -5,24 +5,32 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
-//TODO Брать слово из файла
 public class Dictionary {
 
-    private static final List<String> wordsList = new ArrayList<>(Arrays.asList("Указатель", "Радуга", "Мармелад", "Поиск", "Прятки", "Сторож", "Копейка", "Леопард", "Аттракцион",
-            "Дрессировка", "Ошейник", "Карамель", "Водолаз", "Защита", "Батарея", "Решётка", "Квартира", "Дельфинарий", "Непогода", "Вход", "Полиция", "Перекрёсток", "Башня", "Стрелка",
-            "Градусник", "Бутылка", "Щипцы", "Наволочка", "Павлин", "Карточка", "Записка", "Лестница", "Переулок", "Сенокос", "Рассол", "Закат", "Сигнализация", "Журнал", "Заставка", "Тиранозавр",
-            "Микрофон", "Прохожий", "Квитанция", "Пауза", "Новости", "Скарабей", "Серебро", "Творог", "Осадок", "Песня", "Корзина", "Сдача", "Овчарка", "Хлопья", "Телескоп", "Микроб", "Угощение",
-            "Экскаватор", "Письмо", "Пришелец", "Айсберг", "Пластик", "Доставка", "Полка", "Билет", "Вторник", "Льдина", "Интерес", "Троллейбус", "Футболист", "Лисёнок", "Пример", "Баклажан",
-            "Лягушка", "Джокер", "Котлета", "Накидка", "Дикобраз", "Барбарис", "Работник", "Кристалл", "Доспехи", "Халва", "Велосипед", "Крючок", "Кочка", "Черепаха", "Петля", "Осень", "Яйцо"
-    ));
+    private static final List<String> wordsList = new ArrayList<>();
 
-    public static String fetchRandomNoun(){
+    public Dictionary() throws FileNotFoundException {
+        String separator = File.separator;
+        File file = new File("src" + separator + "main" + separator + "resources" + separator + "Dictionary.md");
+        Scanner scanner = new Scanner(file);
+        while(scanner.hasNextLine()){
+            wordsList.add(scanner.nextLine());
+        }
+
+        scanner.close();
+
+    }
+
+    public String fetchRandomNoun(){
 
             String randomWord = "";
             if (!wordsList.isEmpty()) {
